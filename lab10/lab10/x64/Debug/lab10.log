@@ -1,0 +1,4 @@
+﻿  lab10.cpp
+C:\Users\Ulyana\Desktop\C++\lab10\lab10\lab10.cpp(44,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Ulyana\Desktop\C++\lab10\lab10\lab10.cpp(51,14): warning C4804: '>': unsafe use of type 'bool' in operation
+  lab10.vcxproj -> C:\Users\Ulyana\Desktop\C++\lab10\x64\Debug\lab10.exe

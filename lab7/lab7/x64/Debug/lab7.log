@@ -1,0 +1,5 @@
+﻿  lab7.cpp
+C:\Users\Ulyana\Desktop\C++\lab7\lab7\lab7.cpp(192,32): warning C4244: 'argument': conversion from 'double' to 'const int', possible loss of data
+C:\Users\Ulyana\Desktop\C++\lab7\lab7\lab7.cpp(192,13): warning C4244: 'argument': conversion from 'double' to 'const int', possible loss of data
+C:\Users\Ulyana\Desktop\C++\lab7\lab7\lab7.cpp(206,9): warning C4101: 'brush': unreferenced local variable
+  lab7.vcxproj -> C:\Users\Ulyana\Desktop\C++\lab7\x64\Debug\lab7.exe
