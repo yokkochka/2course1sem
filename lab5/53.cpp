@@ -1,70 +1,74 @@
-#include <bits/stdc++.h>
+//Метод Крускала
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
-int p[100000];
-int rk[100000];
-
-//Тип для представления рёбер.
-struct edge {
-    int a, b, len;
-
-    bool operator<(const edge& other) {
-        return len < other.len;
-    }
+struct Edge {
+    int src, dest, weight;
 };
 
-void init_dsu() {
-    for (int i = 0; i < 100000; i++) {
-        p[i] = i;
-        rk[i] = 1;
-    }
+
+// Сравнение рёбер по весу для сортировки
+bool compareEdges(Edge e1, Edge e2) {
+    return e1.weight < e2.weight;
 }
 
-int get_root(int v) {
-    if (p[v] == v) {
+
+// Найти множество вершины
+int findSet(int v, vector<int>& parent) {
+    if (v == parent[v])
         return v;
-    } else {
-        return p[v] = get_root(p[v]);   //На выходе из рекурсии переподвешиваем v
+    return parent[v] = findSet(parent[v], parent);
+}
+
+
+// Объединить два множества
+void unionSets(int a, int b, vector<int>& parent, vector<int>& rank) {
+    a = findSet(a, parent);
+    b = findSet(b, parent);
+    if (a != b) {
+        if (rank[a] < rank[b])
+            swap(a, b);
+        parent[b] = a;
+        if (rank[a] == rank[b])
+            rank[a]++;
     }
 }
 
-bool merge(int a, int b) {
-    int ra = get_root(a), rb = get_root(b);
 
-    if (ra == rb) {
-        return false;
-    } else {
-        if (rk[ra] < rk[rb]) {
-            p[ra] = rb;
-        } else if (rk[rb] < rk[ra]) {
-            p[rb] = ra;
-        } else {
-            p[ra] = rb;
-            rk[rb]++;
+
+// Метод Крускала для поиска MST
+void kruskal(int V, vector<Edge>& edges) {
+    sort(edges.begin(), edges.end(), compareEdges);
+    vector<int> parent(V);
+    vector<int> rank(V, 0);
+    for (int i = 0; i < V; i++)
+        parent[i] = i;
+    vector<Edge> result;
+    for (Edge e : edges) {
+        if (findSet(e.src, parent) != findSet(e.dest, parent)) {
+            result.push_back(e);
+            unionSets(e.src, e.dest, parent, rank);
         }
-
-        return true;
+    }
+    
+    for (Edge e : result) {
+        cout << "vertex " << e.src << " contacts the top " << e.dest << " edge weight " << e.weight << endl;
     }
 }
 
 
 
 int main() {
-    vector<edge> edges;
-    //Ввод edges...
+    int V = 8;
+    setlocale(0, "");
+    vector<Edge> edges = {
+        {0, 1, 8}, {0, 6, 9}, {1, 2, 2}, {1, 4, 5}, {2, 3, 3},
+        {2, 5, 10}, {3, 5, 3}, {4, 5, 6}, {4, 6, 9}, {5, 7, 12}, {6, 7, 7}
+    };
+    kruskal(V, edges);
 
-    sort(edges.begin(), edges.end());
-
-    int mst_weight = 0;
-
-    init_dsu();
-
-    for (edge e: edges) {
-        if (merge(e.a, e.b)) {      //Если a и b находятся в разных компонентах,
-            mst_weight += e.len;    //Добавить ребро в минимальный остов.
-        }
-    }
-
-    cout << "Minimum spanning tree weight: " << mst_weight << endl;
 }

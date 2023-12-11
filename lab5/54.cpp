@@ -1,65 +1,62 @@
+// Прим
+
+
 #include <iostream>
+#include <vector>
+#include <queue>
+
 using namespace std;
 
-
+const int INF = 1e9;
 struct Edge {
-    int destination;
-    int weight;
-    
-    Edge() : destination(0), weight(0) {}  // Конструктор по умолчанию
-    Edge(int dest, int w) : destination(dest), weight(w) {}
+    int vertex, weight;
 };
-
-const int INF = 1e9 + 7;
-const int MAX_N = 100;
-
-Edge graph[MAX_N][MAX_N];
-bool used[MAX_N];
-
 int main() {
-    int n = 8;
-    int mst_weight = 0;
+    int V = 8;
+    setlocale(0, "");
+    vector<vector<Edge>> adj(V);
+    // Заполнение графа
+    adj[0] = { {1, 8}, {6, 9} };
+    adj[1] = { {0, 8}, {2, 2}, {4, 5} };
+    adj[2] = { {1, 2}, {3, 3}, {5, 10} };
+    adj[3] = { {2, 3}, {5, 3} };
+    adj[4] = { {1, 5}, {5, 6}, {6, 9} };
+    adj[5] = { {2, 10}, {3, 3}, {4, 6}, {7, 12} };
+    adj[6] = { {0, 9}, {4, 9}, {7, 7} };
+    adj[7] = { {5, 12}, {6, 7} };
 
-    // Инициализация графа (пример)
-    graph[1][0] = Edge(2, 1);
-    graph[0][0] = Edge(1, 2);
-    graph[0][1] = Edge(4, 3);
-    graph[0][2] = Edge(5, 10);
-    graph[7][0] = Edge(6, 10);
-    graph[4][0] = Edge(5, 11);
-    graph[7][1] = Edge(5, 12);
-    graph[6][0] = Edge(3, 13);
-    graph[5][0] = Edge(6, 15);
-    graph[2][0] = Edge(3, 17);
-    graph[4][1] = Edge(7, 20);
-    graph[1][1] = Edge(6, 35);
 
-    for (int i = 0; i < MAX_N; ++i) {
-        used[i] = false;
-    }
 
-    for (int start_vertex = 0; start_vertex < n; ++start_vertex) {
-        if (!used[start_vertex]) {
-            int closest_vertex = -1;
-            int min_edge_weight = INF;
 
-            for (int i = 0; i < n; ++i) {
-                if (graph[start_vertex][i].weight > 0 && !used[i] && graph[start_vertex][i].weight < min_edge_weight) {
-                    closest_vertex = i;
-                    min_edge_weight = graph[start_vertex][i].weight;
-                }
-            }
-
-            if (closest_vertex != -1) {
-                used[start_vertex] = used[closest_vertex] = true;
-                mst_weight += min_edge_weight;
-
-                cout << "Added edge: " << start_vertex << " -- " << closest_vertex << " with weight " << min_edge_weight << endl;
+    vector<int> cost(V, INF);   
+    vector<int> parent(V, -1);
+    vector<bool> inMST(V, false); 
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    
+    
+    
+    int start = 0;
+    pq.push({ 0, start });
+    cost[start] = 0;
+    while (!pq.empty()) {
+        int u = pq.top().second;
+        pq.pop();
+        inMST[u] = true;
+        for (Edge& edge : adj[u]) {
+            int v = edge.vertex;
+            int w = edge.weight;
+            if (!inMST[v] && cost[v] > w) {
+                cost[v] = w;
+                pq.push({ w, v });
+                parent[v] = u;
             }
         }
     }
 
-    cout << "Minimum spanning tree weight: " << mst_weight << endl;
 
-    return 0;
+    // Вывод результата
+    for (int i = 1; i < V; ++i)
+        if (parent[i] != -1)
+            cout << "Vertex " << parent[i] << " contacts the top " << i << "edge weight " << cost[i] << endl;
+
 }
