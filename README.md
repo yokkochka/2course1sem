@@ -65,7 +65,7 @@ Developing a graphical interface using GDI in the windows API. The project inclu
 - Improved performance by using two maximum values, significantly reducing execution time compared to the previous implementation.
 - The program now uses a static array to simplify code and reduce memory usage.
 
-## How to Use
+## How to use
 
 1. **Clone the repository**:
     ```bash
