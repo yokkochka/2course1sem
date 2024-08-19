@@ -1,18 +1,18 @@
 /*
-1.	Случайное выбранное число сохраняется в переменную. Тип переменной выбирается из таблицы типов переменных (float)
+1. A randomly selected number is stored in a variable. The variable type is selected from the variable type
+table (float)
 */
 
-#include <iostream>
 #include <time.h>
+
+#include <iostream>
 
 using namespace std;
 
-int main(){
-    // Штука для серии
+int main() {
     time_t t;
     srand(time(&t));
 
-    // Сохранениеy в переменную
     float rnd = rand();
     cout << "\n[Task1] Random variable: " << rnd << "\n\n";
 }

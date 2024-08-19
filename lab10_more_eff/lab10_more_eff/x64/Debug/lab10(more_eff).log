@@ -1,0 +1,4 @@
+﻿  lab10(more_eff).cpp
+C:\Users\Ulyana\Desktop\C++\lab10(more_eff)\lab10(more_eff)\lab10(more_eff).cpp(46,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Ulyana\Desktop\C++\lab10(more_eff)\lab10(more_eff)\lab10(more_eff).cpp(54,14): warning C4804: '>': unsafe use of type 'bool' in operation
+  lab10(more_eff).vcxproj -> C:\Users\Ulyana\Desktop\C++\lab10(more_eff)\x64\Debug\lab10(more_eff).exe
